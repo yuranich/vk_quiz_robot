@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateQuestionTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateQuestionLabel_questionId}" for="questionId" />
+                    <h:inputText id="questionId" value="#{questionController.selected.questionId}" title="#{bundle.CreateQuestionTitle_questionId}" required="true" requiredMessage="#{bundle.CreateQuestionRequiredMessage_questionId}"/>
+                    <h:outputLabel value="#{bundle.CreateQuestionLabel_content}" for="content" />
+                    <h:inputText id="content" value="#{questionController.selected.content}" title="#{bundle.CreateQuestionTitle_content}" required="true" requiredMessage="#{bundle.CreateQuestionRequiredMessage_content}"/>
+                    <h:outputLabel value="#{bundle.CreateQuestionLabel_answerA}" for="answerA" />
+                    <h:inputText id="answerA" value="#{questionController.selected.answerA}" title="#{bundle.CreateQuestionTitle_answerA}" required="true" requiredMessage="#{bundle.CreateQuestionRequiredMessage_answerA}"/>
+                    <h:outputLabel value="#{bundle.CreateQuestionLabel_answerB}" for="answerB" />
+                    <h:inputText id="answerB" value="#{questionController.selected.answerB}" title="#{bundle.CreateQuestionTitle_answerB}" required="true" requiredMessage="#{bundle.CreateQuestionRequiredMessage_answerB}"/>
+                    <h:outputLabel value="#{bundle.CreateQuestionLabel_answerC}" for="answerC" />
+                    <h:inputText id="answerC" value="#{questionController.selected.answerC}" title="#{bundle.CreateQuestionTitle_answerC}" required="true" requiredMessage="#{bundle.CreateQuestionRequiredMessage_answerC}"/>
+                    <h:outputLabel value="#{bundle.CreateQuestionLabel_answerD}" for="answerD" />
+                    <h:inputText id="answerD" value="#{questionController.selected.answerD}" title="#{bundle.CreateQuestionTitle_answerD}" />
+                    <h:outputLabel value="#{bundle.CreateQuestionLabel_answerE}" for="answerE" />
+                    <h:inputText id="answerE" value="#{questionController.selected.answerE}" title="#{bundle.CreateQuestionTitle_answerE}" />
+                    <h:outputLabel value="#{bundle.CreateQuestionLabel_rightAnswer}" for="rightAnswer" />
+                    <h:inputText id="rightAnswer" value="#{questionController.selected.rightAnswer}" title="#{bundle.CreateQuestionTitle_rightAnswer}" required="true" requiredMessage="#{bundle.CreateQuestionRequiredMessage_rightAnswer}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{questionController.create}" value="#{bundle.CreateQuestionSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{questionController.prepareList}" value="#{bundle.CreateQuestionShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateQuestionIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

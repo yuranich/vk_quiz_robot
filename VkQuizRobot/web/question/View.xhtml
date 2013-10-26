@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewQuestionTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewQuestionLabel_questionId}"/>
+                    <h:outputText value="#{questionController.selected.questionId}" title="#{bundle.ViewQuestionTitle_questionId}"/>
+                    <h:outputText value="#{bundle.ViewQuestionLabel_content}"/>
+                    <h:outputText value="#{questionController.selected.content}" title="#{bundle.ViewQuestionTitle_content}"/>
+                    <h:outputText value="#{bundle.ViewQuestionLabel_answerA}"/>
+                    <h:outputText value="#{questionController.selected.answerA}" title="#{bundle.ViewQuestionTitle_answerA}"/>
+                    <h:outputText value="#{bundle.ViewQuestionLabel_answerB}"/>
+                    <h:outputText value="#{questionController.selected.answerB}" title="#{bundle.ViewQuestionTitle_answerB}"/>
+                    <h:outputText value="#{bundle.ViewQuestionLabel_answerC}"/>
+                    <h:outputText value="#{questionController.selected.answerC}" title="#{bundle.ViewQuestionTitle_answerC}"/>
+                    <h:outputText value="#{bundle.ViewQuestionLabel_answerD}"/>
+                    <h:outputText value="#{questionController.selected.answerD}" title="#{bundle.ViewQuestionTitle_answerD}"/>
+                    <h:outputText value="#{bundle.ViewQuestionLabel_answerE}"/>
+                    <h:outputText value="#{questionController.selected.answerE}" title="#{bundle.ViewQuestionTitle_answerE}"/>
+                    <h:outputText value="#{bundle.ViewQuestionLabel_rightAnswer}"/>
+                    <h:outputText value="#{questionController.selected.rightAnswer}" title="#{bundle.ViewQuestionTitle_rightAnswer}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{questionController.destroyAndView}" value="#{bundle.ViewQuestionDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewQuestionEditLink}"/>
+                <br />
+                <h:commandLink action="#{questionController.prepareCreate}" value="#{bundle.ViewQuestionCreateLink}" />
+                <br />
+                <h:commandLink action="#{questionController.prepareList}" value="#{bundle.ViewQuestionShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewQuestionIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

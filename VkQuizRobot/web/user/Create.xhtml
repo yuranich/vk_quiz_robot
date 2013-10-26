@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateUserTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateUserLabel_userId}" for="userId" />
+                    <h:inputText id="userId" value="#{userController.selected.userId}" title="#{bundle.CreateUserTitle_userId}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_userId}"/>
+                    <h:outputLabel value="#{bundle.CreateUserLabel_questionId}" for="questionId" />
+                    <h:inputText id="questionId" value="#{userController.selected.questionId}" title="#{bundle.CreateUserTitle_questionId}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_questionId}"/>
+                    <h:outputLabel value="#{bundle.CreateUserLabel_answer}" for="answer" />
+                    <h:inputText id="answer" value="#{userController.selected.answer}" title="#{bundle.CreateUserTitle_answer}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_answer}"/>
+                    <h:outputLabel value="#{bundle.CreateUserLabel_corAnswer}" for="corAnswer" />
+                    <h:inputText id="corAnswer" value="#{userController.selected.corAnswer}" title="#{bundle.CreateUserTitle_corAnswer}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_corAnswer}"/>
+                    <h:outputLabel value="#{bundle.CreateUserLabel_matches}" for="matches" />
+                    <h:inputText id="matches" value="#{userController.selected.matches}" title="#{bundle.CreateUserTitle_matches}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_matches}"/>
+                    <h:outputLabel value="#{bundle.CreateUserLabel_answerNumber}" for="answerNumber" />
+                    <h:inputText id="answerNumber" value="#{userController.selected.answerNumber}" title="#{bundle.CreateUserTitle_answerNumber}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_answerNumber}"/>
+                    <h:outputLabel value="#{bundle.CreateUserLabel_rightAnswerNumber}" for="rightAnswerNumber" />
+                    <h:inputText id="rightAnswerNumber" value="#{userController.selected.rightAnswerNumber}" title="#{bundle.CreateUserTitle_rightAnswerNumber}" required="true" requiredMessage="#{bundle.CreateUserRequiredMessage_rightAnswerNumber}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{userController.create}" value="#{bundle.CreateUserSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{userController.prepareList}" value="#{bundle.CreateUserShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateUserIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
