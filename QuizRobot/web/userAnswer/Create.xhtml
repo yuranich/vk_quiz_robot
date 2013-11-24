@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateUserAnswerTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateUserAnswerLabel_userAnswerId}" for="userAnswerId" />
+                    <h:inputText id="userAnswerId" value="#{userAnswerController.selected.userAnswerId}" title="#{bundle.CreateUserAnswerTitle_userAnswerId}" required="true" requiredMessage="#{bundle.CreateUserAnswerRequiredMessage_userAnswerId}"/>
+                    <h:outputLabel value="#{bundle.CreateUserAnswerLabel_userId}" for="userId" />
+                    <h:selectOneMenu id="userId" value="#{userAnswerController.selected.userId}" title="#{bundle.CreateUserAnswerTitle_userId}" >
+                        <f:selectItems value="#{userInfoController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateUserAnswerLabel_questionId}" for="questionId" />
+                    <h:selectOneMenu id="questionId" value="#{userAnswerController.selected.questionId}" title="#{bundle.CreateUserAnswerTitle_questionId}" >
+                        <f:selectItems value="#{questionController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateUserAnswerLabel_answerId}" for="answerId" />
+                    <h:selectOneMenu id="answerId" value="#{userAnswerController.selected.answerId}" title="#{bundle.CreateUserAnswerTitle_answerId}" >
+                        <f:selectItems value="#{answerVariantController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{userAnswerController.create}" value="#{bundle.CreateUserAnswerSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{userAnswerController.prepareList}" value="#{bundle.CreateUserAnswerShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateUserAnswerIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

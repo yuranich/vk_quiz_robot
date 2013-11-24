@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewUserInfoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewUserInfoLabel_userId}"/>
+                    <h:outputText value="#{userInfoController.selected.userId}" title="#{bundle.ViewUserInfoTitle_userId}"/>
+                    <h:outputText value="#{bundle.ViewUserInfoLabel_nickName}"/>
+                    <h:outputText value="#{userInfoController.selected.nickName}" title="#{bundle.ViewUserInfoTitle_nickName}"/>
+                    <h:outputText value="#{bundle.ViewUserInfoLabel_firstName}"/>
+                    <h:outputText value="#{userInfoController.selected.firstName}" title="#{bundle.ViewUserInfoTitle_firstName}"/>
+                    <h:outputText value="#{bundle.ViewUserInfoLabel_lastName}"/>
+                    <h:outputText value="#{userInfoController.selected.lastName}" title="#{bundle.ViewUserInfoTitle_lastName}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{userInfoController.destroyAndView}" value="#{bundle.ViewUserInfoDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewUserInfoEditLink}"/>
+                <br />
+                <h:commandLink action="#{userInfoController.prepareCreate}" value="#{bundle.ViewUserInfoCreateLink}" />
+                <br />
+                <h:commandLink action="#{userInfoController.prepareList}" value="#{bundle.ViewUserInfoShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewUserInfoIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
