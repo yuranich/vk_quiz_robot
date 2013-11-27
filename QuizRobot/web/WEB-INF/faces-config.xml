@@ -9,4 +9,9 @@
             <var>bundle</var>
         </resource-bundle>
     </application>
+    <managed-bean>
+        <managed-bean-name>quizFormController</managed-bean-name>
+        <managed-bean-class>ru.ncedu.samarin.quizrobot.corejsf.QuizFormController</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 </faces-config>

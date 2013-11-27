@@ -10,8 +10,10 @@ import java.io.IOException;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -21,16 +23,23 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 public class UserLogout implements Serializable {
 
+    private static final Logger LOG = LoggerFactory.getLogger(UserLogout.class);
     /**
      * Creates a new instance of UserLogout
      */
     public UserLogout() {
     }
     
-    public void logout() throws IOException {
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        ec.invalidateSession();
-        ec.redirect("/QuizRobot/faces/index.xhtml");
+    public String logout() throws IOException {
+        LOG.info("logout() invoked");
+//        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+//        ec.invalidateSession();
+//        ec.redirect("/QuizRobot/faces/index.xhtml");
+        
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        session.invalidate();
+//        FacesContext.getCurrentInstance().getExternalContext();
+        return "/faces/index.xhtml";
     }
     
 }
