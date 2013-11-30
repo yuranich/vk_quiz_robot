@@ -8,11 +8,22 @@ package ru.ncedu.samarin.quizrobot.corejsf;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.ncedu.samarin.quizrobot.jpa.entities.Question;
+import ru.ncedu.samarin.quizrobot.jpa.session.AnswerVariantFacade;
+import ru.ncedu.samarin.quizrobot.jpa.session.QuestionFacade;
 
 /**
  *
@@ -22,6 +33,22 @@ import javax.inject.Named;
 @SessionScoped
 public class QuizFormController implements Serializable{
 
+    @EJB private QuestionFacade qf;
+    @EJB private AnswerVariantFacade avf;
+    
+    private String section = "English";
+    
+    private static final Logger LOG = LoggerFactory.getLogger(QuizFormController.class);
+    
+    public String getSection() {
+        return section;
+    }
+    
+    public void setSection(String section) {
+        LOG.info("section is setted");
+        this.section = section;
+    }
+    
     /**
      * Creates a new instance of QuizFormController
      */
@@ -30,22 +57,20 @@ public class QuizFormController implements Serializable{
     
     public List<String> getScienceSectionList() {
         
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         list.add("English");
         return list;
     }
     
-    public Set<String> getNextQuestionSet() {
-        Set<String> set = new HashSet<>();
-        set.add("Question 1");
-        set.add("Question 2");
-        return set;
+    public List<Question> getNextQuestionList() {
+        return qf.findAllInSection(section).subList(0, 10);
     } 
     
-    public Set<String> getAnswerSetForTheQuestion() {
-        Set<String> set = new HashSet<>();
-        set.add("Answer 1");
-        set.add("Answer 2");
-        return set;        
+    public List<String> getAnswersForTheQuestion(String num) {
+        return avf.findAnswersByQuestionId((short)(Integer.parseInt(num)));
+    }
+    
+    public String resultsHandler() {
+        return null;
     }
 }

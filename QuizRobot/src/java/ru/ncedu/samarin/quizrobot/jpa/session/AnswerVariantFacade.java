@@ -6,6 +6,10 @@
 
 package ru.ncedu.samarin.quizrobot.jpa.session;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,6 +21,9 @@ import ru.ncedu.samarin.quizrobot.jpa.entities.AnswerVariant;
  */
 @Stateless
 public class AnswerVariantFacade extends AbstractFacade<AnswerVariant> {
+    @EJB
+    private QuestionFacade questionFacade;
+    
     @PersistenceContext(unitName = "QuizRobotPU")
     private EntityManager em;
 
@@ -29,4 +36,12 @@ public class AnswerVariantFacade extends AbstractFacade<AnswerVariant> {
         super(AnswerVariant.class);
     }
     
+    public List<String> findAnswersByQuestionId(Short id) {
+        Collection<AnswerVariant> answers = questionFacade.find(id).getAnswerVariantCollection();
+        List<String> result = new ArrayList<String>();
+        for(AnswerVariant var : answers) {
+            result.add(var.getVariantText());
+        }
+        return result;
+    }
 }

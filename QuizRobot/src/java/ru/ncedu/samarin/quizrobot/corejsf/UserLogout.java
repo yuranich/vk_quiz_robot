@@ -39,7 +39,7 @@ public class UserLogout implements Serializable {
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
         session.invalidate();
 //        FacesContext.getCurrentInstance().getExternalContext();
-        return "/faces/index.xhtml";
+        return "/faces/index.xhtml?faces-redirect=true";
     }
     
 }

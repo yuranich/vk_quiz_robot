@@ -17,16 +17,22 @@
             <h:form id="out">
                 <h3>English test!</h3>
                 <br />
-                <h:dataTable var="q_item" value="#{quizFormController.nextQuestionSet}">
+                <p>#{quizFormController.setSection("English")}</p>
+                <h:dataTable var="q_item" value="#{quizFormController.nextQuestionList}" >
                     <h:column>
-                        <h:outputText value="#{q_item}"/>
-                        <h:dataTable var="a_item" value="#{quizFormController.answerSetForTheQuestion}">
+                        <h:outputText value="#{q_item.contentText}"/>                        
+                        <h:dataTable var="an_item" value="#{q_item.answerVariantCollection}">
                             <h:column>
-                                <h:outputText value="#{a_item}" />
+                                <h:outputText value="#{an_item.variantText}" />
+                            </h:column>
+                            <h:column>
+                                <h:selectBooleanCheckbox />
                             </h:column>
                         </h:dataTable>
                     </h:column>
                 </h:dataTable>
+                <br />
+                <h:commandButton value="#{bundle.QuizGetResults}" action="#{quizFormController.resultsHandler}" /> 
                 
                 <br />
                 <br />

@@ -15,7 +15,7 @@
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
             <h:form>
-                <h:outputText value="Choose section"/>
+                <h:outputText value="#{bundle.QuizChoseSection}"/>
                 <h:dataTable var="item" value="#{quizFormController.scienceSectionList}">
                     <h:column>
                         <h:link outcome="#{item}QuizForm.xhtml" value="#{item}"/>
