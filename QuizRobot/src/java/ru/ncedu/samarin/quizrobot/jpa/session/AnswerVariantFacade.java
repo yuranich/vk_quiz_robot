@@ -6,9 +6,6 @@
 
 package ru.ncedu.samarin.quizrobot.jpa.session;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -34,14 +31,5 @@ public class AnswerVariantFacade extends AbstractFacade<AnswerVariant> {
 
     public AnswerVariantFacade() {
         super(AnswerVariant.class);
-    }
-    
-    public List<String> findAnswersByQuestionId(Short id) {
-        Collection<AnswerVariant> answers = questionFacade.find(id).getAnswerVariantCollection();
-        List<String> result = new ArrayList<String>();
-        for(AnswerVariant var : answers) {
-            result.add(var.getVariantText());
-        }
-        return result;
     }
 }

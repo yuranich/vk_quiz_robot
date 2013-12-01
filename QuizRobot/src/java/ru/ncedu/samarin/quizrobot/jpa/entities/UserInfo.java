@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -42,7 +44,8 @@ public class UserInfo implements Serializable {
     @Column(name = "USER_ID")
     private Integer userId;
     @Size(max = 30)
-    @Column(name = "NICK_NAME")
+    @JoinColumn(name = "NICK_NAME", referencedColumnName = "USERNAME")
+    @ManyToOne
     private String nickName;
     @Size(max = 30)
     @Column(name = "FIRST_NAME")

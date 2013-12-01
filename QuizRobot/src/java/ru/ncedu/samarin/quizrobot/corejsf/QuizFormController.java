@@ -8,17 +8,10 @@ package ru.ncedu.samarin.quizrobot.corejsf;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import javax.ejb.EJB;
-import javax.ejb.Stateful;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.ncedu.samarin.quizrobot.jpa.entities.Question;
@@ -34,7 +27,6 @@ import ru.ncedu.samarin.quizrobot.jpa.session.QuestionFacade;
 public class QuizFormController implements Serializable{
 
     @EJB private QuestionFacade qf;
-    @EJB private AnswerVariantFacade avf;
     
     private String section = "English";
     
@@ -65,11 +57,7 @@ public class QuizFormController implements Serializable{
     public List<Question> getNextQuestionList() {
         return qf.findAllInSection(section).subList(0, 10);
     } 
-    
-    public List<String> getAnswersForTheQuestion(String num) {
-        return avf.findAnswersByQuestionId((short)(Integer.parseInt(num)));
-    }
-    
+   
     public String resultsHandler() {
         return null;
     }
