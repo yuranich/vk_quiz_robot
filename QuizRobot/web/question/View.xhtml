@@ -17,10 +17,10 @@
                 <h:panelGrid columns="2">
                     <h:outputText value="#{bundle.ViewQuestionLabel_questionId}"/>
                     <h:outputText value="#{questionController.selected.questionId}" title="#{bundle.ViewQuestionTitle_questionId}"/>
-                    <h:outputText value="#{bundle.ViewQuestionLabel_scienceSection}"/>
-                    <h:outputText value="#{questionController.selected.scienceSection}" title="#{bundle.ViewQuestionTitle_scienceSection}"/>
                     <h:outputText value="#{bundle.ViewQuestionLabel_contentText}"/>
                     <h:outputText value="#{questionController.selected.contentText}" title="#{bundle.ViewQuestionTitle_contentText}"/>
+                    <h:outputText value="#{bundle.ViewQuestionLabel_sectionId}"/>
+                    <h:outputText value="#{questionController.selected.sectionId}" title="#{bundle.ViewQuestionTitle_sectionId}"/>
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{questionController.destroyAndView}" value="#{bundle.ViewQuestionDestroyLink}"/>

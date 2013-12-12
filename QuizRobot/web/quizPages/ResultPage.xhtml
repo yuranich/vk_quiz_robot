@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewResults}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:outputText value="#{bundle.Score}#{quizFormController.totalResult}" style="font-weight: bold"/>
+            <br />
+            <br />
+            <h:form id="out">
+                <h:dataTable var="item" value="#{quizFormController.questionForms}">
+                    <h:column>
+                    <h:outputText value="#{item.question.contentText}" />
+                    <h:column>
+                        <h:dataTable var="oneAns" value="#{item.userAnswers}" >
+                            <h:column>
+                                Your answer: <h:outputText value="#{oneAns.variantText}" />
+                            </h:column>
+                            <h:column>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<h:graphicImage value="/resources/tick_green_small.gif" rendered="#{oneAns.isCorrect.intValue() eq 1}"/>
+                                <h:graphicImage value="/resources/cross_red_small.gif" rendered="#{oneAns.isCorrect.intValue() ne 1}"/>
+                            </h:column>
+                        </h:dataTable>
+                    </h:column>
+                    </h:column>
+                </h:dataTable>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewUserAnswerIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

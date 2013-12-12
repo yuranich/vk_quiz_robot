@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -31,7 +33,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Question.findAll", query = "SELECT q FROM Question q"),
     @NamedQuery(name = "Question.findByQuestionId", query = "SELECT q FROM Question q WHERE q.questionId = :questionId"),
-    @NamedQuery(name = "Question.findByScienceSection", query = "SELECT q FROM Question q WHERE q.scienceSection = :scienceSection"),
     @NamedQuery(name = "Question.findByContentText", query = "SELECT q FROM Question q WHERE q.contentText = :contentText")})
 public class Question implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -42,11 +43,6 @@ public class Question implements Serializable {
     private Short questionId;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 30)
-    @Column(name = "SCIENCE_SECTION")
-    private String scienceSection;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 4000)
     @Column(name = "CONTENT_TEXT")
     private String contentText;
@@ -54,6 +50,10 @@ public class Question implements Serializable {
     private Collection<UserAnswer> userAnswerCollection;
     @OneToMany(mappedBy = "questionId")
     private Collection<AnswerVariant> answerVariantCollection;
+    
+    @JoinColumn(name = "SECTION_ID", referencedColumnName = "SECTION_ID")
+    @ManyToOne
+    private ScienceSection sectionId;
 
     public Question() {
     }
@@ -62,9 +62,8 @@ public class Question implements Serializable {
         this.questionId = questionId;
     }
 
-    public Question(Short questionId, String scienceSection, String contentText) {
+    public Question(Short questionId, String contentText) {
         this.questionId = questionId;
-        this.scienceSection = scienceSection;
         this.contentText = contentText;
     }
 
@@ -76,20 +75,20 @@ public class Question implements Serializable {
         this.questionId = questionId;
     }
 
-    public String getScienceSection() {
-        return scienceSection;
-    }
-
-    public void setScienceSection(String scienceSection) {
-        this.scienceSection = scienceSection;
-    }
-
     public String getContentText() {
         return contentText;
     }
 
     public void setContentText(String contentText) {
         this.contentText = contentText;
+    }
+    
+    public ScienceSection getSectionId() {
+        return sectionId;
+    }
+
+    public void setSectionId(ScienceSection sectionId) {
+        this.sectionId = sectionId;
     }
 
     @XmlTransient

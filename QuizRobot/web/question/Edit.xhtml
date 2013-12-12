@@ -17,10 +17,12 @@
                 <h:panelGrid columns="2">
                     <h:outputLabel value="#{bundle.EditQuestionLabel_questionId}" for="questionId" />
                     <h:inputText id="questionId" value="#{questionController.selected.questionId}" title="#{bundle.EditQuestionTitle_questionId}" required="true" requiredMessage="#{bundle.EditQuestionRequiredMessage_questionId}"/>
-                    <h:outputLabel value="#{bundle.EditQuestionLabel_scienceSection}" for="scienceSection" />
-                    <h:inputText id="scienceSection" value="#{questionController.selected.scienceSection}" title="#{bundle.EditQuestionTitle_scienceSection}" required="true" requiredMessage="#{bundle.EditQuestionRequiredMessage_scienceSection}"/>
                     <h:outputLabel value="#{bundle.EditQuestionLabel_contentText}" for="contentText" />
                     <h:inputText id="contentText" value="#{questionController.selected.contentText}" title="#{bundle.EditQuestionTitle_contentText}" required="true" requiredMessage="#{bundle.EditQuestionRequiredMessage_contentText}"/>
+                    <h:outputLabel value="#{bundle.EditQuestionLabel_sectionId}" for="sectionId" />
+                    <h:selectOneMenu id="sectionId" value="#{questionController.selected.sectionId}" title="#{bundle.EditQuestionTitle_sectionId}" >
+                        <f:selectItems value="#{scienceSectionController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
                 </h:panelGrid>
                 <h:commandLink action="#{questionController.update}" value="#{bundle.EditQuestionSaveLink}"/>
                 <br />

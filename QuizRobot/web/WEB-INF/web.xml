@@ -38,7 +38,7 @@
         <web-resource-collection>
             <web-resource-name>User pages</web-resource-name>
             <description/>
-            <url-pattern>/faces/userInfo/*</url-pattern>
+            <url-pattern>/faces/quizPages/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
             <description/>

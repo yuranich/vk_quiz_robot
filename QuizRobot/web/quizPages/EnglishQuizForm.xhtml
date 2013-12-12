@@ -8,31 +8,34 @@
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="#{bundle.ViewQuizPageTitle}"></h:outputText>
+            <h:outputText value="#{bundle.ViewEnglishQuizPageTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
             <h:form id="out">
-                <h3>English test!</h3>
-                <br />
                 <p>#{quizFormController.setSection("English")}</p>
                 <h:dataTable var="q_item" value="#{quizFormController.nextQuestionList}" >
                     <h:column>
-                        <h:outputText value="#{q_item.contentText}"/>                        
-                        <h:dataTable var="an_item" value="#{q_item.answerVariantCollection}">
+                        <h:outputText value="#{q_item.question.contentText}"/>                        
+                        <h:selectManyCheckbox layout="pageDirection" value="#{q_item.userAnswers}">
+                            <f:selectItems var="sel_item" value="#{q_item.allAnswers}"
+                                           itemLabel="#{sel_item.variantText}" itemValue="#{sel_item}"/>
+                        </h:selectManyCheckbox>
+                    </h:column>
+<!-- Following column for future may be -->                    
+                    <h:column>
+                        <h:dataTable var="image" value="#{q_item.allAnswers}" rendered="#{quizFormController.isResultPage}">
                             <h:column>
-                                <h:outputText value="#{an_item.variantText}" />
-                            </h:column>
-                            <h:column>
-                                <h:selectBooleanCheckbox />
-                            </h:column>
+                                &nbsp;&nbsp;&nbsp;&nbsp;<h:graphicImage value="/resources/tick_green_small.gif" rendered="#{image.isCorrect.intValue() eq 1}"/>
+                                <h:graphicImage value="/resources/cross_red_small.gif" rendered="#{image.isCorrect.intValue() ne 1}"/>
+                            </h:column>                            
                         </h:dataTable>
                     </h:column>
                 </h:dataTable>
                 <br />
-                <h:commandButton value="#{bundle.QuizGetResults}" action="#{quizFormController.resultsHandler}" /> 
+                <h:commandButton value="#{bundle.QuizGetResults}" action="#{quizFormController.resultsHandler}" />
                 
                 <br />
                 <br />

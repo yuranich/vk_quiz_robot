@@ -10,11 +10,14 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -26,6 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "USER_ANSWER")
 @XmlRootElement
+@SequenceGenerator(name = "USER_ANSWER_SEQ", initialValue = 10)
 @NamedQueries({
     @NamedQuery(name = "UserAnswer.findAll", query = "SELECT u FROM UserAnswer u"),
     @NamedQuery(name = "UserAnswer.findByUserAnswerId", query = "SELECT u FROM UserAnswer u WHERE u.userAnswerId = :userAnswerId")})
@@ -34,6 +38,7 @@ public class UserAnswer implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_ANSWER_SEQ")
     @Column(name = "USER_ANSWER_ID")
     private Integer userAnswerId;
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
@@ -52,6 +57,12 @@ public class UserAnswer implements Serializable {
     public UserAnswer(Integer userAnswerId) {
         this.userAnswerId = userAnswerId;
     }
+
+    public UserAnswer(UserInfo userId, Question questionId, AnswerVariant answerId) {
+        this.userId = userId;
+        this.questionId = questionId;
+        this.answerId = answerId;
+    }    
 
     public Integer getUserAnswerId() {
         return userAnswerId;

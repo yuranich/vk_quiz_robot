@@ -6,11 +6,9 @@
 
 package ru.ncedu.samarin.quizrobot.jpa.session;
 
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import ru.ncedu.samarin.quizrobot.jpa.entities.Question;
 
 /**
@@ -29,12 +27,6 @@ public class QuestionFacade extends AbstractFacade<Question> {
 
     public QuestionFacade() {
         super(Question.class);
-    }
-    
-    public List<Question> findAllInSection(String section) {
-        Query query = em.createNamedQuery("Question.findByScienceSection").setParameter("scienceSection", section);
-        return query.getResultList();
-        
     }
     
 }

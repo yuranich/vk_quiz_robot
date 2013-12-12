@@ -22,6 +22,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.ncedu.samarin.quizrobot.corejsf.model.QuestionForm;
 
 /**
  *
@@ -55,6 +58,8 @@ public class AnswerVariant implements Serializable {
     @ManyToOne
     private Question questionId;
 
+    private static final Logger LOG = LoggerFactory.getLogger(QuestionForm.class);
+
     public AnswerVariant() {
     }
 
@@ -76,6 +81,7 @@ public class AnswerVariant implements Serializable {
     }
 
     public String getVariantText() {
+        LOG.info(variantText);
         return variantText;
     }
 
@@ -90,7 +96,7 @@ public class AnswerVariant implements Serializable {
     public void setIsCorrect(Short isCorrect) {
         this.isCorrect = isCorrect;
     }
-
+    
     @XmlTransient
     public Collection<UserAnswer> getUserAnswerCollection() {
         return userAnswerCollection;

@@ -12,8 +12,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -43,16 +41,25 @@ public class UserInfo implements Serializable {
     @NotNull
     @Column(name = "USER_ID")
     private Integer userId;
-    @Size(max = 30)
-    @JoinColumn(name = "NICK_NAME", referencedColumnName = "USERNAME")
-    @ManyToOne
+    
+    @Size(min = 1, max = 200)
+    @NotNull
+    @Column(unique = true, name = "NICK_NAME")
     private String nickName;
+    
+    @Size(min = 1, max = 200)
+    @NotNull
+    @Column(name = "PASSWORD")
+    private String password;
+
     @Size(max = 30)
     @Column(name = "FIRST_NAME")
     private String firstName;
+    
     @Size(max = 30)
     @Column(name = "LAST_NAME")
     private String lastName;
+    
     @OneToMany(mappedBy = "userId")
     private Collection<UserAnswer> userAnswerCollection;
 
@@ -78,7 +85,11 @@ public class UserInfo implements Serializable {
     public void setNickName(String nickName) {
         this.nickName = nickName;
     }
-
+    
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    
     public String getFirstName() {
         return firstName;
     }

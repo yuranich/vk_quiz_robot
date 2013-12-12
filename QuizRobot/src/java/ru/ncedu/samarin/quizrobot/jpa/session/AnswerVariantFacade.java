@@ -6,11 +6,12 @@
 
 package ru.ncedu.samarin.quizrobot.jpa.session;
 
-import javax.ejb.EJB;
+import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import ru.ncedu.samarin.quizrobot.jpa.entities.AnswerVariant;
+import ru.ncedu.samarin.quizrobot.jpa.entities.UserAnswer;
 
 /**
  *
@@ -18,9 +19,6 @@ import ru.ncedu.samarin.quizrobot.jpa.entities.AnswerVariant;
  */
 @Stateless
 public class AnswerVariantFacade extends AbstractFacade<AnswerVariant> {
-    @EJB
-    private QuestionFacade questionFacade;
-    
     @PersistenceContext(unitName = "QuizRobotPU")
     private EntityManager em;
 

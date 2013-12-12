@@ -6,18 +6,19 @@
 
 package ru.ncedu.samarin.quizrobot.jpa.session;
 
+import java.util.Collection;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import ru.ncedu.samarin.quizrobot.jpa.entities.UserInfo;
+import ru.ncedu.samarin.quizrobot.jpa.entities.Question;
+import ru.ncedu.samarin.quizrobot.jpa.entities.ScienceSection;
 
 /**
  *
  * @author yuranich
  */
 @Stateless
-public class UserInfoFacade extends AbstractFacade<UserInfo> {
+public class ScienceSectionFacade extends AbstractFacade<ScienceSection> {
     @PersistenceContext(unitName = "QuizRobotPU")
     private EntityManager em;
 
@@ -26,13 +27,12 @@ public class UserInfoFacade extends AbstractFacade<UserInfo> {
         return em;
     }
 
-    public UserInfoFacade() {
-        super(UserInfo.class);
+    public ScienceSectionFacade() {
+        super(ScienceSection.class);
     }
     
-    public UserInfo findByNickName(String nickName) {
-        Query query = em.createNamedQuery("UserInfo.findByNickName").setParameter("nickName", nickName);
-        return (UserInfo)query.getSingleResult();
+    public Collection<Question> findAllQuestionInSection(String section) {
+        ScienceSection ss = (ScienceSection)em.createNamedQuery("ScienceSection.findBySection").setParameter("sectionName", section).getSingleResult();
+        return ss.getQuestionCollection();
     }
-    
 }

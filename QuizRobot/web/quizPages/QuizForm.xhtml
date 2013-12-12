@@ -18,7 +18,7 @@
                 <h:outputText value="#{bundle.QuizChoseSection}"/>
                 <h:dataTable var="item" value="#{quizFormController.scienceSectionList}">
                     <h:column>
-                        <h:link outcome="#{item}QuizForm.xhtml" value="#{item}"/>
+                        <h:link outcome="#{item.sectionName}QuizForm.xhtml" value="#{item.sectionName}"/>
                     </h:column>
                 </h:dataTable>
                 <br />

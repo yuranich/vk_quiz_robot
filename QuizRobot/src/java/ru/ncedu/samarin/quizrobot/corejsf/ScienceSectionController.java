@@ -1,9 +1,9 @@
 package ru.ncedu.samarin.quizrobot.corejsf;
 
-import ru.ncedu.samarin.quizrobot.jpa.entities.AnswerVariant;
+import ru.ncedu.samarin.quizrobot.jpa.entities.ScienceSection;
 import ru.ncedu.samarin.quizrobot.corejsf.util.JsfUtil;
 import ru.ncedu.samarin.quizrobot.corejsf.util.PaginationHelper;
-import ru.ncedu.samarin.quizrobot.jpa.session.AnswerVariantFacade;
+import ru.ncedu.samarin.quizrobot.jpa.session.ScienceSectionFacade;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -18,29 +18,29 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
-@Named("answerVariantController")
+@Named("scienceSectionController")
 @SessionScoped
-public class AnswerVariantController implements Serializable {
+public class ScienceSectionController implements Serializable {
 
-    private AnswerVariant current;
+    private ScienceSection current;
     private DataModel items = null;
     @EJB
-    private ru.ncedu.samarin.quizrobot.jpa.session.AnswerVariantFacade ejbFacade;
+    private ru.ncedu.samarin.quizrobot.jpa.session.ScienceSectionFacade ejbFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
-    
-    public AnswerVariantController() {
+
+    public ScienceSectionController() {
     }
 
-    public AnswerVariant getSelected() {
+    public ScienceSection getSelected() {
         if (current == null) {
-            current = new AnswerVariant();
+            current = new ScienceSection();
             selectedItemIndex = -1;
         }
         return current;
     }
 
-    private AnswerVariantFacade getFacade() {
+    private ScienceSectionFacade getFacade() {
         return ejbFacade;
     }
 
@@ -68,13 +68,13 @@ public class AnswerVariantController implements Serializable {
     }
 
     public String prepareView() {
-        current = (AnswerVariant) getItems().getRowData();
+        current = (ScienceSection) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "View";
     }
 
     public String prepareCreate() {
-        current = new AnswerVariant();
+        current = new ScienceSection();
         selectedItemIndex = -1;
         return "Create";
     }
@@ -82,7 +82,7 @@ public class AnswerVariantController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AnswerVariantCreated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("ScienceSectionCreated"));
             return prepareCreate();
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
@@ -91,7 +91,7 @@ public class AnswerVariantController implements Serializable {
     }
 
     public String prepareEdit() {
-        current = (AnswerVariant) getItems().getRowData();
+        current = (ScienceSection) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         return "Edit";
     }
@@ -99,7 +99,7 @@ public class AnswerVariantController implements Serializable {
     public String update() {
         try {
             getFacade().edit(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AnswerVariantUpdated"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("ScienceSectionUpdated"));
             return "View";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
@@ -108,7 +108,7 @@ public class AnswerVariantController implements Serializable {
     }
 
     public String destroy() {
-        current = (AnswerVariant) getItems().getRowData();
+        current = (ScienceSection) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
         performDestroy();
         recreatePagination();
@@ -132,7 +132,7 @@ public class AnswerVariantController implements Serializable {
     private void performDestroy() {
         try {
             getFacade().remove(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("AnswerVariantDeleted"));
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/resources/Bundle").getString("ScienceSectionDeleted"));
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/resources/Bundle").getString("PersistenceErrorOccured"));
         }
@@ -188,21 +188,21 @@ public class AnswerVariantController implements Serializable {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
 
-    public AnswerVariant getAnswerVariant(java.lang.Short id) {
+    public ScienceSection getScienceSection(java.lang.Short id) {
         return ejbFacade.find(id);
     }
 
-    @FacesConverter(forClass = AnswerVariant.class)
-    public static class AnswerVariantControllerConverter implements Converter {
+    @FacesConverter(forClass = ScienceSection.class)
+    public static class ScienceSectionControllerConverter implements Converter {
 
         @Override
         public Object getAsObject(FacesContext facesContext, UIComponent component, String value) {
             if (value == null || value.length() == 0) {
                 return null;
             }
-            AnswerVariantController controller = (AnswerVariantController) facesContext.getApplication().getELResolver().
-                    getValue(facesContext.getELContext(), null, "answerVariantController");
-            return controller.getAnswerVariant(getKey(value));
+            ScienceSectionController controller = (ScienceSectionController) facesContext.getApplication().getELResolver().
+                    getValue(facesContext.getELContext(), null, "scienceSectionController");
+            return controller.getScienceSection(getKey(value));
         }
 
         java.lang.Short getKey(String value) {
@@ -222,11 +222,11 @@ public class AnswerVariantController implements Serializable {
             if (object == null) {
                 return null;
             }
-            if (object instanceof AnswerVariant) {
-                AnswerVariant o = (AnswerVariant) object;
-                return getStringKey(o.getAnswerId());
+            if (object instanceof ScienceSection) {
+                ScienceSection o = (ScienceSection) object;
+                return getStringKey(o.getSectionId());
             } else {
-                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + AnswerVariant.class.getName());
+                throw new IllegalArgumentException("object " + object + " is of type " + object.getClass().getName() + "; expected type: " + ScienceSection.class.getName());
             }
         }
 
