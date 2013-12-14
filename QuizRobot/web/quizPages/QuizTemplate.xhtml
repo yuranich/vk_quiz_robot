@@ -7,23 +7,27 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <ui:composition template="/template.xhtml">
-        <ui:define name="title">
-            <h:outputText value="#{bundle.ViewQuizPageTitle}"></h:outputText>
-        </ui:define>
         <ui:define name="body">
             <h:panelGroup id="messagePanel" layout="block">
                 <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
             </h:panelGroup>
-            <h:form>
-                <h:outputText value="#{bundle.QuizChoseSection}"/>
-                <h:dataTable var="item" value="#{quizFormController.scienceSectionList}">
+            <h:form id="out">
+                <p>#{quizFormController.prepareNextQuestionList()}</p>
+                <h:dataTable var="q_item" value="#{quizFormController.questionList}" >
                     <h:column>
-                        <h:link outcome="#{item.sectionName}QuizForm.xhtml" value="#{item.sectionName}"/>
+                        <h:outputText value="#{q_item.question.contentText}" style="font-size: large"/>
+                        <h:selectManyCheckbox layout="pageDirection" value="#{q_item.userAnswers}">
+                            <f:selectItems var="sel_item" value="#{q_item.allAnswers}"
+                                           itemLabel="#{sel_item.variantText}" itemValue="#{sel_item}"/>
+                        </h:selectManyCheckbox>
                     </h:column>
                 </h:dataTable>
                 <br />
+                <h:commandButton value="#{bundle.QuizGetResults}" action="#{quizFormController.resultsHandler}" />  
+                <br />        
                 <br />
                 <h:link outcome="/index" value="#{bundle.ViewUserAnswerIndexLink}"/>
+
             </h:form>
         </ui:define>
     </ui:composition>

@@ -6,9 +6,10 @@
 
 package ru.ncedu.samarin.quizrobot.corejsf.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.ncedu.samarin.quizrobot.corejsf.QuizFormController;
 import ru.ncedu.samarin.quizrobot.jpa.entities.AnswerVariant;
 import ru.ncedu.samarin.quizrobot.jpa.entities.Question;
 
@@ -20,6 +21,7 @@ public class QuestionForm {
     private Question question;
     private AnswerVariant[] userAnswers;
     private AnswerVariant[] allAnswers;
+    private AnswerVariant[] correctAnswers;
     
     private static final Logger LOG = LoggerFactory.getLogger(QuestionForm.class);
     
@@ -29,10 +31,17 @@ public class QuestionForm {
     public QuestionForm(Question question) {
         this.question = question;
         allAnswers = question.getAnswerVariantCollection().toArray(new AnswerVariant[]{});
+        List<AnswerVariant> list = new ArrayList<>();
+        for(AnswerVariant ans : allAnswers) {
+            if ((int)(ans.getIsCorrect()) == 1) {
+                list.add(ans);
+            }
+        }
+        correctAnswers = list.toArray(new AnswerVariant[]{});
     }
 
     public QuestionForm(Question question, AnswerVariant[] asnwers) {
-        this.question = question;
+        this(question);
         this.userAnswers = asnwers;
     }
 
@@ -47,9 +56,18 @@ public class QuestionForm {
 
     public void setQuestion(Question question) {
         this.question = question;
+        allAnswers = question.getAnswerVariantCollection().toArray(new AnswerVariant[]{});
+        List<AnswerVariant> list = new ArrayList<>();
+        for(AnswerVariant ans : allAnswers) {
+            if ((int)(ans.getIsCorrect()) == 1) {
+                list.add(ans);
+            }
+        }
+        correctAnswers = list.toArray(new AnswerVariant[]{});
     }
 
     public void setUserAnswers(AnswerVariant[] userAnswers) {
+        LOG.info("user variants: " + userAnswers);
         this.userAnswers = userAnswers;
     }
 
@@ -63,18 +81,17 @@ public class QuestionForm {
     }
 
     public int getNumberOfCorrectAnswers() {
-        int count = 0;
-        for(AnswerVariant var : allAnswers) {
-            count += var.getIsCorrect();
-        }
-        return count;
+        return correctAnswers.length;
     }
     
     public int getAnswerScore() {
         int count = 0;
         for(AnswerVariant var : userAnswers) {
-            count += var.getIsCorrect();
+            if ((int)(var.getIsCorrect()) == 1)
+                count++;
+            else 
+                count--;
         }
-        return count;
+        return (count >= 0)? count: 0;
     }
 }
