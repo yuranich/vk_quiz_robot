@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.ncedu.samarin.quizrobot.jpa.entities.AnswerVariant;
 import ru.ncedu.samarin.quizrobot.jpa.entities.Question;
+import ru.ncedu.samarin.quizrobot.jpa.entities.UserAnswer;
 
 /**
  *
@@ -29,14 +30,25 @@ public class QuestionForm {
     }
 
     public QuestionForm(Question question) {
+//        long startTime = System.currentTimeMillis();
+//        LOG.info("First bookmark in question {}", question.getQuestionId());
         this.question = question;
-        allAnswers = question.getAnswerVariantCollection().toArray(new AnswerVariant[]{});
+//        LOG.info("Second bookmark {} (right after getting answer variants) in question {}", System.currentTimeMillis() - startTime, question.getQuestionId());
+//        startTime = System.currentTimeMillis();
+        final AnswerVariant[] arrType = new AnswerVariant[]{};
+//        LOG.info("Second bookmark {} (after creating arrey) in question {}", System.currentTimeMillis() - startTime, question.getQuestionId());
+//        startTime = System.currentTimeMillis();
+        allAnswers = (AnswerVariant[]) new ArrayList(question.getAnswerVariantCollection()).toArray(arrType);
+//        LOG.info("Type of collection: {}", answerVariantCollection.getClass());
+//        LOG.info("Second bookmark {} (right after filling test) in question {}", System.currentTimeMillis() - startTime, question.getQuestionId());
+//        startTime = System.currentTimeMillis();
         List<AnswerVariant> list = new ArrayList<>();
         for(AnswerVariant ans : allAnswers) {
             if ((int)(ans.getIsCorrect()) == 1) {
                 list.add(ans);
             }
         }
+//        LOG.info("Third bookmark {} (right after loop) in question {}", System.currentTimeMillis() - startTime, question.getQuestionId());
         correctAnswers = list.toArray(new AnswerVariant[]{});
     }
 
@@ -93,5 +105,21 @@ public class QuestionForm {
                 count--;
         }
         return (count >= 0)? count: 0;
+    }
+    
+    public List<AnswerVariant> getUserAnswersOnQuestion() {
+        List<AnswerVariant> list = new ArrayList<>();
+        for(UserAnswer ans : question.getUserAnswerCollection()) {
+            list.add(ans.getAnswerId());
+        }
+        return list;
+    }    
+    
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof QuestionForm)
+            return question.equals(((QuestionForm)o).getQuestion().equals(o));
+        else
+            return false;
     }
 }

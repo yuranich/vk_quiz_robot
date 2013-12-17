@@ -3,31 +3,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
-        <title>Facelet Title</title>
+        <title><h:outputText value="#{bundle.IndexTitle}" /></title>
         <h:outputStylesheet name="css/jsfcrud.css"/>
     </h:head>
     <h:body>
-        Hello from Facelets
-        <br />
-        <h:link outcome="/quizPages/QuizForm" value="Get a Quiz" />
-        <br />
-        <h:link outcome="/answerVariant/List" value="Show All AnswerVariant Items"/>
-        <br />
-        <h:link outcome="/question/List" value="Show All Question Items"/>
-        <br />
-        <h:link outcome="/scienceSection/List" value="Show All ScienceSection Items"/>
-        <br />
-        <h:link outcome="/userAnswer/List" value="Show All UserAnswer Items"/>
-        <br />
-        <h:link outcome="/userInfo/List" value="Show All UserInfo Items"/>
+        <h:panelGrid columns="3" width="100%" cellpadding="8">
+            <h:outputText value="" />
+            <h:outputText value="#{bundle.HelloMessage}" style="font-size: x-large"/>
+            <h:outputText value="" />
+            <h:outputText value="#{bundle.AdminPanel}" style="font-size: large"/>
+            <h:outputText value="" />
+            <h:outputText value="" />
+            <h:outputText value="" />
+            <h:link outcome="/userPages/quizPages/QuizSections" value="#{bundle.WatchSections}" />
+            <h:outputText value="" />
+            <h:link outcome="/adminPages/scienceSection/List" value="Show All ScienceSection Items"/>
+            <h:outputText value="" />
+            <h:outputText value="" />
+            <h:link outcome="/adminPages/question/List" value="Show All Question Items"/>
+            <h:outputText value="" />
+            <h:outputText value="" />
+            <h:link outcome="/adminPages/answerVariant/List" value="Show All AnswerVariant Items"/>
+            <h:outputText value="" />
+            <h:outputText value="" />
+            <h:link outcome="/adminPages/userAnswer/List" value="Show All UserAnswer Items"/>
+            <h:outputText value="" />
+            <h:outputText value="" />
+            <h:link outcome="/adminPages/userInfo/List" value="Show All UserInfo Items"/>
+            <h:outputText value="" />
+            <h:outputText value="" />
+        </h:panelGrid>
+
     </h:body>
-
-
-
-
-
-
-
 
 
 

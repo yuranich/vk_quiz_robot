@@ -9,15 +9,22 @@
 <h:outputStylesheet name="css/jsfcrud.css"/>
     </h:head>
 
-    <h:body>
+    <h:body>        
         <table width="100%"> 
-            <td align="right">
-                <h:form>
-                    <h:commandButton value="Logout" action="#{userLogout.logout}"></h:commandButton>       
-                </h:form>
-            </td>
+            <tr>
+                <td align="right">
+                    <h:outputText value="#{quizFormController.currentUser}" />
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    <h:form>
+                        <h:commandButton value="Logout" action="#{userLogout.logout}" />       
+                    </h:form>                
+                </td>
+            </tr>
         </table>
-        
+
         <h1>
             <ui:insert name="title">Default Title</ui:insert>
         </h1>
@@ -25,6 +32,7 @@
         <p>
             <ui:insert name="body">Default Body</ui:insert>
         </p>
+ 
     </h:body>
 
 </html>

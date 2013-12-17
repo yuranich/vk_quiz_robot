@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:panelGrid columns="5" width="100%" cellpadding="10">
+                <h:outputText value="" />
+                <h:outputText value="" />
+                <h:outputText value="" />
+                <h:outputText value="&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
+                <h:outputText value="#{bundle.ViewQuizPageTitle}" style="font-size: x-large; font-weight: bold; color: #4e6a71"></h:outputText>
+            </h:panelGrid>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:panelGrid columns="3" width="100%" cellpadding="5">
+                <h:outputText value="#{bundle.UserPanel}" style="font-size: large"/>
+                <h:form>
+                    <p>#{quizFormController.prepareScienceSectionList()}</p>
+                    <h:outputText value="#{bundle.QuizChoseSection}" style="font-size: large; color: brown"/>
+                    <h:dataTable var="item" value="#{quizFormController.scienceSectionList}">
+                        <h:column>
+                            <h:link outcome="#{item.sectionName}QuizForm.xhtml" value="#{item.sectionName}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+                <h:outputText value="&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;" />
+                <h:link outcome="UserStatistics" value="Current statistics" />
+                <h:outputText value="" />
+                <h:outputText value="" />
+                <h:link outcome="/index" value="#{bundle.ViewUserAnswerIndexLink}"/>
+            </h:panelGrid>
+        </ui:define>
+    </ui:composition>
+
+</html>

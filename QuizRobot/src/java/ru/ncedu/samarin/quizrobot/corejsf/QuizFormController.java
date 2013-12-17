@@ -10,9 +10,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.TreeSet;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -27,6 +29,7 @@ import ru.ncedu.samarin.quizrobot.jpa.entities.AnswerVariant;
 import ru.ncedu.samarin.quizrobot.jpa.entities.Question;
 import ru.ncedu.samarin.quizrobot.jpa.entities.ScienceSection;
 import ru.ncedu.samarin.quizrobot.jpa.entities.UserAnswer;
+import ru.ncedu.samarin.quizrobot.jpa.entities.UserInfo;
 import ru.ncedu.samarin.quizrobot.jpa.session.ScienceSectionFacade;
 import ru.ncedu.samarin.quizrobot.jpa.session.UserAnswerFacade;
 import ru.ncedu.samarin.quizrobot.jpa.session.UserInfoFacade;
@@ -51,6 +54,7 @@ public class QuizFormController implements Serializable{
     private UserInfoFacade uif;
     
     private List<QuestionForm> questionList = new ArrayList<>();
+    private Set<QuestionForm> userQuestionStatistics = new HashSet<>();
     private List<ScienceSection> scienceSectionList = new ArrayList<>();
     private static final Logger LOG = LoggerFactory.getLogger(QuizFormController.class);
     private String section;
@@ -70,6 +74,7 @@ public class QuizFormController implements Serializable{
         questionList.clear();
         questionList = getRandomTest(collection);
         LOG.info(questionList.toString());
+        LOG.info("current user is: " + getCurrentUser());
     } 
     
     public List<QuestionForm> getQuestionList() {
@@ -113,7 +118,24 @@ public class QuizFormController implements Serializable{
     public List<ScienceSection> getScienceSectionList() {
         return scienceSectionList;
     }
-   
+
+    public void prepareUserStatistics() {
+        UserInfo userInfo = uif.findByNickName(getCurrentUser());
+        Collection<UserAnswer> userAnswers = userInfo.getUserAnswerCollection();
+        userQuestionStatistics.clear();
+        for(UserAnswer ans : userAnswers) {
+            userQuestionStatistics.add(new QuestionForm(ans.getQuestionId()));
+        }
+    }
+
+    public Set<QuestionForm> getUserQuestionStatistics() {
+        return userQuestionStatistics;
+    }
+
+    public void setUserQuestionStatistics(Set<QuestionForm> userQuestionStatistics) {
+        this.userQuestionStatistics = userQuestionStatistics;
+    }
+    
     public String resultsHandler() {
         LOG.info("handler results of answers!!=========");
         String user = getCurrentUser();
@@ -143,21 +165,30 @@ public class QuizFormController implements Serializable{
     }
 
     private List<QuestionForm> getRandomTest(Collection<Question> collection) {
-        ArrayList<QuestionForm> test = new ArrayList<>();
+//        long startTime = System.currentTimeMillis();
+//        LOG.info("First bookmark");
+        ArrayList<QuestionForm> test = new ArrayList<>(collection.size());
         for (Question q : collection) {
             test.add(new QuestionForm(q));
         }
+//        LOG.info("QuizFormController Second bookmark {} (right after filling test)", System.currentTimeMillis() - startTime);
+//        startTime = System.currentTimeMillis();
+        
         int range = test.size();
         Random rand = new Random();
         TreeSet<Integer> indexSet = new TreeSet<>();
         while(indexSet.size() < testSize) {
             indexSet.add(rand.nextInt(range));
         }
+//        LOG.info("Third bookmark {} (right after filling indexSet)", System.currentTimeMillis() - startTime);
+//        startTime = System.currentTimeMillis();
+
         LOG.info("sequence of question numbers: " + indexSet);
         ArrayList<QuestionForm> result = new ArrayList<>();
         for(Integer index : indexSet) {
             result.add(test.get(index));
         }
+//        LOG.info("Forth bookmark {} (right after all)", System.currentTimeMillis() - startTime);
         return result;
     }
 }

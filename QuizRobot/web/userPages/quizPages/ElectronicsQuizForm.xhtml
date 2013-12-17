@@ -8,7 +8,13 @@
     <p>#{quizFormController.setSection("Electronics")}</p>
     <ui:composition template="QuizTemplate.xhtml">
         <ui:define name="title">
-            <h:outputText value="#{bundle.ViewElectronicsQuizPageTitle}" />
+            <table width="100%">
+                <tr>
+                    <td align="center">
+                        <h:outputText value="#{bundle.ViewElectronicsQuizPageTitle}" style="font-size: xx-large"/>
+                    </td>
+                </tr>
+            </table>
         </ui:define>        
     </ui:composition>
 
